@@ -1,6 +1,6 @@
 ﻿namespace HR_Assisteroso
 {
-    partial class Form1
+    partial class addClinicianForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,35 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.addClinician = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // addClinician
+            // label1
             // 
-            this.addClinician.Location = new System.Drawing.Point(76, 106);
-            this.addClinician.Name = "addClinician";
-            this.addClinician.Size = new System.Drawing.Size(155, 23);
-            this.addClinician.TabIndex = 0;
-            this.addClinician.Text = "Add Clinician";
-            this.addClinician.UseVisualStyleBackColor = true;
-            this.addClinician.Click += new System.EventHandler(this.addClinician_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(106, 98);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Hello There";
             // 
-            // Form1
+            // addClinicianForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.addClinician);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Controls.Add(this.label1);
+            this.Name = "addClinicianForm";
+            this.Text = "addClinicianForm";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button addClinician;
+        private System.Windows.Forms.Label label1;
     }
 }
-
