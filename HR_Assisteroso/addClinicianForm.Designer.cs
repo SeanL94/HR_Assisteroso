@@ -120,6 +120,7 @@
             this.Controls.Add(this.label1);
             this.Name = "addClinicianForm";
             this.Text = "addClinicianForm";
+            this.Load += new System.EventHandler(this.addClinicianForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
