@@ -37,5 +37,10 @@ namespace HR_Assisteroso
 
             this.Close();
         }
+
+        private void addClinicianForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
