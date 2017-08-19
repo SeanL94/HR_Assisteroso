@@ -8,18 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace HR_Assisteroso
 {
     public partial class addClinicianForm : Form
     {
-        SqlConnection cn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Sean\documents\visual studio 2017\Projects\HR_Assisteroso\HR_Assisteroso\Clinicians.mdf;Integrated Security=True");
-        SqlCommand cmd = new SqlCommand();
+        private SQLiteConnection db;
         SqlDataReader dr;
         public addClinicianForm()
         {
             InitializeComponent();
-            cmd.Connection = cn;
+            db = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
+            db.Open();
         }
 
         private void submitClinician_Click(object sender, EventArgs e)
@@ -29,10 +30,9 @@ namespace HR_Assisteroso
             String firstNameString = firstName.Text;
             String lastNameString = lastName.Text;
 
-            cn.Open();
-            cmd.CommandText = "INSERT INTO clinicians (First_Name, Last_Name, DOB) VALUES ('"+firstName.Text+"','"+lastName.Text+"','"+dateOfBirth.Text+"')";
-            cmd.ExecuteNonQuery();
-            cmd.Clone();
+            string SQL = "INSERT INTO clinicians (First_Name, Last_Name, DOB) VALUES ('"+firstName.Text+"','"+lastName.Text+"','"+dateOfBirth.Text+"')";
+            SQLiteCommand push = new SQLiteCommand(SQL, db);
+            push.ExecuteNonQuery();
             System.Windows.Forms.MessageBox.Show(String.Format("Success!\r\r{0}\r{1}\r{2}", firstNameString, lastNameString, dateOfBirthString));
 
             this.Close();
