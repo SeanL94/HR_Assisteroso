@@ -24,43 +24,10 @@ namespace HR_Assisteroso
             db = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;");
             db.Open();
 
-
-
-            //Figure out how to run once
-            //string SQL = "CREATE TABLE clinicians (id INT AUTO_INCREMENT, First_Name TEXT, Last_Name TEXT, DOB TEXT, PRIMARY KEY (id))";
-            //SQLiteCommand create = new SQLiteCommand(SQL, db);
-            //create.ExecuteNonQuery();
-
-            string SQL = "SELECT * FROM clinicians";
-            SQLiteCommand pull = new SQLiteCommand(SQL, db);
-            SQLiteDataReader dr = pull.ExecuteReader();
-
-            int top = 50;
-            int left = 100;
-
-            while (dr.Read())
-            {
-                foreach (var element in dr)
-                {
-                    Button viewData = new Button();
-                    viewData.Text = dr.GetValue(1).ToString();
-                    viewData.Location = new Point(30, viewData.Bottom + 30);
-
-                    string lastName = dr.GetValue(2).ToString();
-                    string dob = dr.GetValue(3).ToString();
-
-                    viewData.Left = left;
-                    viewData.Top = top;
-                    Controls.Add(viewData);
-                    left += viewData.Width + 2;
-                    if (left >= 500)
-                    {
-                        left = 100;
-                        top += viewData.Height + 2;
-                    }
-                    viewData.Click += new EventHandler(this.viewData_Click);
-                }
-            }
+            string SQLcreate = "CREATE TABLE IF NOT EXISTS clinicians (id INT AUTO_INCREMENT, First_Name TEXT, Last_Name TEXT, DOB TEXT, PRIMARY KEY (id))";
+            SQLiteCommand create = new SQLiteCommand(SQLcreate, db);
+            create.ExecuteNonQuery();
+            showClinicians();
         }
 
         private void addClinician_Click(object sender, EventArgs e)
@@ -82,7 +49,49 @@ namespace HR_Assisteroso
                 string lastName = dr.GetValue(2).ToString();
                 string dob = dr.GetValue(3).ToString();
                 MessageBox.Show(firstName + lastName + dob);
+
+                
             }
+        }
+
+        public void showClinicians()
+        {
+            string SQL = "SELECT * FROM clinicians";
+            SQLiteCommand pull = new SQLiteCommand(SQL, db);
+            SQLiteDataReader dr = pull.ExecuteReader();
+
+            int top = 50;
+            int left = 100;
+
+            while (dr.Read())
+            {
+                foreach (var element in dr)
+                {
+                    Button viewData = new Button();
+                    viewData.Text = dr.GetValue(1).ToString();
+                    viewData.Location = new Point(30, viewData.Bottom + 30);
+
+
+                    string lastName = dr.GetValue(2).ToString();
+                    string dob = dr.GetValue(3).ToString();
+
+                    viewData.Left = left;
+                    viewData.Top = top;
+                    Controls.Add(viewData);
+                    left += viewData.Width + 2;
+                    if (left >= 500)
+                    {
+                        left = 100;
+                        top += viewData.Height + 2;
+                    }
+                    viewData.Click += new EventHandler(this.viewData_Click);
+                }
+            }
+        }
+
+        private void createDocument(String firstname, String lastname, String dob)
+        {
+
         }
     }
 }

@@ -15,7 +15,6 @@ namespace HR_Assisteroso
     public partial class addClinicianForm : Form
     {
         private SQLiteConnection db;
-        SqlDataReader dr;
         public addClinicianForm()
         {
             InitializeComponent();
@@ -34,7 +33,10 @@ namespace HR_Assisteroso
             SQLiteCommand push = new SQLiteCommand(SQL, db);
             push.ExecuteNonQuery();
             System.Windows.Forms.MessageBox.Show(String.Format("Success!\r\r{0}\r{1}\r{2}", firstNameString, lastNameString, dateOfBirthString));
-
+            if (System.Windows.Forms.Application.OpenForms["Form1"] != null)
+            {
+                (System.Windows.Forms.Application.OpenForms["Form1"] as Form1).showClinicians();
+            }
             this.Close();
         }
 
