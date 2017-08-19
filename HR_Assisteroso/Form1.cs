@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Data.SqlClient;
-
+using Microsoft.Office.Interop.Word;
 
 namespace HR_Assisteroso
 {   
@@ -48,9 +48,8 @@ namespace HR_Assisteroso
             {
                 string lastName = dr.GetValue(2).ToString();
                 string dob = dr.GetValue(3).ToString();
-                MessageBox.Show(firstName + lastName + dob);
 
-                
+                createDocument(firstName, lastName, dob);
             }
         }
 
@@ -69,8 +68,7 @@ namespace HR_Assisteroso
                 {
                     Button viewData = new Button();
                     viewData.Text = dr.GetValue(1).ToString();
-                    viewData.Location = new Point(30, viewData.Bottom + 30);
-
+                    viewData.Location = new System.Drawing.Point(30, viewData.Bottom + 30);
 
                     string lastName = dr.GetValue(2).ToString();
                     string dob = dr.GetValue(3).ToString();
@@ -91,7 +89,43 @@ namespace HR_Assisteroso
 
         private void createDocument(String firstname, String lastname, String dob)
         {
+            try
+            {
+                //Create an instance for word app
+                Microsoft.Office.Interop.Word.Application winword = new Microsoft.Office.Interop.Word.Application();
 
+                //Set animation status for word application
+                winword.ShowAnimation = false;
+
+                //Set status for word application is to be visible or not.
+                winword.Visible = false;
+
+                //Create a missing variable for missing value
+                object missing = System.Reflection.Missing.Value;
+
+                //Create a new document
+                Microsoft.Office.Interop.Word.Document document = winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
+
+                //adding text to document
+                document.Content.SetRange(0, 0);
+                document.Content.Text = firstname + Environment.NewLine + lastname + Environment.NewLine + dob;
+
+                //Save the document
+                object filename = @"c:\users\jarad\documents\Demo.docx";
+                document.SaveAs2(ref filename);
+                document.Close(ref missing, ref missing, ref missing);
+                document = null;
+                winword.Quit(ref missing, ref missing, ref missing);
+                winword = null;
+                MessageBox.Show("Document created successfully!");
+                Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+                Document doc = app.Documents.Open(filename);
+                app.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
