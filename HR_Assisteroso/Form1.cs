@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Data.SqlClient;
 using Microsoft.Office.Interop.Word;
+using System.IO;
 
 namespace HR_Assisteroso
 {   
@@ -102,12 +103,23 @@ namespace HR_Assisteroso
                 //Create a missing variable for missing value
                 object missing = System.Reflection.Missing.Value;
 
+                //get file path for Tempalte.docx
+                string fileName = "Template.docx";
+                string path = Path.Combine(Environment.CurrentDirectory, @"Data\", fileName);
+
                 //Create a new document
-                Microsoft.Office.Interop.Word.Document document = winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
+                //Microsoft.Office.Interop.Word.Document document = winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
+                //Document document = winword.Documents.Open(@"C:\Users\Sean\Documents\Visual Studio 2017\Projects\HR_Assisteroso\HR_Assisteroso\Template.docx");
+                Document document = winword.Documents.Open(path);
+
 
                 //adding text to document
-                document.Content.SetRange(0, 0);
-                document.Content.Text = firstname + Environment.NewLine + lastname + Environment.NewLine + dob;
+                //document.Content.SetRange(0, 0);
+                //document.Content.Text = firstname + Environment.NewLine + lastname + Environment.NewLine + dob;
+                document.Variables["First_Name"].Value = firstname;
+                document.Variables["Last_Name"].Value = lastname;
+                document.Variables["DOB"].Value = dob;
+                document.Fields.Update();
 
                 //Save the document
                 //object filename = @"c:\users\sean\documents\Demo.docx";
