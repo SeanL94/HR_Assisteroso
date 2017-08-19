@@ -48,7 +48,6 @@ namespace HR_Assisteroso
             {
                 string lastName = dr.GetValue(2).ToString();
                 string dob = dr.GetValue(3).ToString();
-
                 createDocument(firstName, lastName, dob);
             }
         }
@@ -95,10 +94,10 @@ namespace HR_Assisteroso
                 Microsoft.Office.Interop.Word.Application winword = new Microsoft.Office.Interop.Word.Application();
 
                 //Set animation status for word application
-                winword.ShowAnimation = false;
+                winword.ShowAnimation = true;
 
                 //Set status for word application is to be visible or not.
-                winword.Visible = false;
+                winword.Visible = true;
 
                 //Create a missing variable for missing value
                 object missing = System.Reflection.Missing.Value;
@@ -111,16 +110,16 @@ namespace HR_Assisteroso
                 document.Content.Text = firstname + Environment.NewLine + lastname + Environment.NewLine + dob;
 
                 //Save the document
-                object filename = @"c:\users\jarad\documents\Demo.docx";
-                document.SaveAs2(ref filename);
-                document.Close(ref missing, ref missing, ref missing);
-                document = null;
-                winword.Quit(ref missing, ref missing, ref missing);
-                winword = null;
-                MessageBox.Show("Document created successfully!");
-                Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
-                Document doc = app.Documents.Open(filename);
-                app.Visible = true;
+                //object filename = @"c:\users\sean\documents\Demo.docx";
+                //document.SaveAs2(ref filename);
+                //document.Close(ref missing, ref missing, ref missing);
+                //document = null;
+                //winword.Quit(ref missing, ref missing, ref missing);
+                //winword = null;
+                //MessageBox.Show("Document created successfully!");
+                //Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+                //Document doc = app.Documents.Open(filename);
+                //app.Visible = true;
             }
             catch (Exception ex)
             {

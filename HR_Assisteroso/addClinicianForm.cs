@@ -32,7 +32,6 @@ namespace HR_Assisteroso
             string SQL = "INSERT INTO clinicians (First_Name, Last_Name, DOB) VALUES ('"+firstName.Text+"','"+lastName.Text+"','"+dateOfBirth.Text+"')";
             SQLiteCommand push = new SQLiteCommand(SQL, db);
             push.ExecuteNonQuery();
-            System.Windows.Forms.MessageBox.Show(String.Format("Success!\r\r{0}\r{1}\r{2}", firstNameString, lastNameString, dateOfBirthString));
             if (System.Windows.Forms.Application.OpenForms["Form1"] != null)
             {
                 (System.Windows.Forms.Application.OpenForms["Form1"] as Form1).showClinicians();
