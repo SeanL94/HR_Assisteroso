@@ -24,7 +24,6 @@ namespace HR_Assisteroso
 
         private void submitClinician_Click(object sender, EventArgs e)
         {
-            
             String dateOfBirthString = dateOfBirth.Text;
             String firstNameString = firstName.Text;
             String lastNameString = lastName.Text;
@@ -36,6 +35,7 @@ namespace HR_Assisteroso
             {
                 (System.Windows.Forms.Application.OpenForms["Form1"] as Form1).showClinicians();
             }
+            //db.Close();
             this.Close();
         }
 

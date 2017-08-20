@@ -29,16 +29,19 @@ namespace HR_Assisteroso
             SQLiteCommand create = new SQLiteCommand(SQLcreate, db);
             create.ExecuteNonQuery();
             showClinicians();
+            //db.Close();
         }
 
         private void addClinician_Click(object sender, EventArgs e)
         {
+            //db.Close();
             addClinicianForm acf = new addClinicianForm();
             acf.Show();
         }
 
         private void viewData_Click(object sender, EventArgs e)
         {
+            //db.Open();
             Button btn = (Button)sender;
             string firstName = btn.Text.ToString();
             string SQL = "SELECT * FROM clinicians WHERE First_Name = '"+firstName+"'";
@@ -49,8 +52,11 @@ namespace HR_Assisteroso
             {
                 string lastName = dr.GetValue(2).ToString();
                 string dob = dr.GetValue(3).ToString();
-                createDocument(firstName, lastName, dob);
+                createDocument(firstName, lastName, dob, "Template.docx");
+                createDocument(firstName, lastName, dob, "secondTemplate.docx");
+                dr.Dispose();
             }
+            //db.Close();
         }
 
         public void showClinicians()
@@ -85,12 +91,14 @@ namespace HR_Assisteroso
                     viewData.Click += new EventHandler(this.viewData_Click);
                 }
             }
+            dr.Dispose();
         }
 
-        private void createDocument(String firstname, String lastname, String dob)
+        private void createDocument(String firstname, String lastname, String dob, String fileName)
         {
             try
             {
+                //db.Open();
                 //Create an instance for word app
                 Microsoft.Office.Interop.Word.Application winword = new Microsoft.Office.Interop.Word.Application();
 
@@ -104,18 +112,14 @@ namespace HR_Assisteroso
                 object missing = System.Reflection.Missing.Value;
 
                 //get file path for Tempalte.docx
-                string fileName = "Template.docx";
+                //string fileName = "Template.docx";
                 string path = Path.Combine(Environment.CurrentDirectory, @"Data\", fileName);
 
                 //Create a new document
-                //Microsoft.Office.Interop.Word.Document document = winword.Documents.Add(ref missing, ref missing, ref missing, ref missing);
-                //Document document = winword.Documents.Open(@"C:\Users\Sean\Documents\Visual Studio 2017\Projects\HR_Assisteroso\HR_Assisteroso\Template.docx");
                 Document document = winword.Documents.Open(path);
 
 
                 //adding text to document
-                //document.Content.SetRange(0, 0);
-                //document.Content.Text = firstname + Environment.NewLine + lastname + Environment.NewLine + dob;
                 document.Variables["First_Name"].Value = firstname;
                 document.Variables["Last_Name"].Value = lastname;
                 document.Variables["DOB"].Value = dob;
@@ -132,6 +136,7 @@ namespace HR_Assisteroso
                 //Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
                 //Document doc = app.Documents.Open(filename);
                 //app.Visible = true;
+                //db.Close();
             }
             catch (Exception ex)
             {
